@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: color-app
-        image: your-dockerhub-user/color-app:1 # Jenkins replaces this dynamically
+        image: bhanutejaravutla/color-app:1
         ports:
         - containerPort: 8080
         resources:
