@@ -56,8 +56,7 @@ pipeline {
         
         stage('Trivy Docker Image Scan') {
             steps {
-                sh 'export TRIVY_SKIP_JAVA_DB=true'
-                sh 'trivy image --scanners vuln --severity HIGH,CRITICAL bhanutejaravutla/color-app:11'
+                sh 'TRIVY_SKIP_JAVA_DB=true trivy image --scanners vuln --severity HIGH,CRITICAL bhanutejaravutla/color-app:${BUILD_NUMBER}'
             }
         }
         
