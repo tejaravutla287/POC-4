@@ -56,12 +56,13 @@ pipeline {
         
         stage('Trivy Docker Image Scan') {
             steps {
-                sh '
+                sh '''
                     trivy image \
                   --scanners vuln \
                   --skip-java-db \
                   --severity HIGH,CRITICAL \
-                  bhanutejaravutla/color-app:11'
+                  bhanutejaravutla/color-app:11
+                '''
             }
         }
         
