@@ -19,9 +19,11 @@ pipeline {
         stage('Trivy File System Scan') {
             steps {
                 sh 'mkdir -p .trivycache'
-                sh 'trivy fs --cache-dir .trivycache --skip-java-db . --severity HIGH,CRITICAL --format table'
+                // Changed to --skip-java-db-update and added explicit path '.' at the end
+                sh 'trivy fs --cache-dir .trivycache --skip-java-db-update --severity HIGH,CRITICAL --format table .'
             }
         }
+
 
         stage('SonarCloud Analysis') {
             steps {
