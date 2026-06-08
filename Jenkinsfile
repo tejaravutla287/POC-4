@@ -37,7 +37,7 @@ pipeline {
         
         stage('Publish to Nexus') {
             steps {
-                sh 'mvn deploy -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-releases/'
+                sh 'mvn deploy --settings /var/lib/jenkins/.m2/settings.xml -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-releases/'
             }
         }
         
