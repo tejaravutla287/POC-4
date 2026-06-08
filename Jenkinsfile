@@ -91,11 +91,14 @@ pipeline {
         
         stage('Deploy to Kubernetes') {
             steps {
-                // Turning validation loops off forces immediate cluster state changes
+                // Keep validation off here to bypass structural file checks
                 sh 'kubectl apply -f deployment.yaml --validate=false'
-                sh "kubectl set image deployment/color-app-deploy color-app=bhanutejaravutla/color-app:${BUILD_NUMBER} --validate=false"
+                
+                // Remove the flag here so the container image update runs natively
+                sh "kubectl set image deployment/color-app-deploy color-app=bhanutejaravutla/color-app:${BUILD_NUMBER}"
             }
         }
+
 
         
         stage('KubeAudit Manifest Scan') {
