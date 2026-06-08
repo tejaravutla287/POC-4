@@ -3,12 +3,10 @@
          xmlns:xsi="http://w3.org"
          xsi:schemaLocation="http://jcp.org http://jcp.org/web-app_4_0.xsd"
          version="4.0">
-
     <servlet>
         <servlet-name>ColorServlet</servlet-name>
         <servlet-class>com.app.ColorServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>ColorServlet</servlet-name>
         <url-pattern>/</url-pattern>
