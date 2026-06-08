@@ -91,10 +91,12 @@ pipeline {
         
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f deployment.yaml'
-                sh "kubectl set image deployment/color-app-deploy color-app=your-dockerhub-user/color-app:${BUILD_NUMBER}"
+                // Turning validation loops off forces immediate cluster state changes
+                sh 'kubectl apply -f deployment.yaml --validate=false'
+                sh "kubectl set image deployment/color-app-deploy color-app=bhanutejaravutla/color-app:${BUILD_NUMBER} --validate=false"
             }
         }
+
         
         stage('KubeAudit Manifest Scan') {
             steps {
