@@ -43,13 +43,13 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t your-dockerhub-user/color-app:${BUILD_NUMBER} .'
+                sh 'docker build -t bhanutejaravutla/color-app:${BUILD_NUMBER} .'
             }
         }
         
         stage('Trivy Docker Image Scan') {
             steps {
-                sh 'trivy image your-dockerhub-user/color-app:${BUILD_NUMBER} --severity HIGH,CRITICAL'
+                sh 'trivy image bhanutejaravutla/color-app:${BUILD_NUMBER} --severity HIGH,CRITICAL'
             }
         }
         
@@ -57,7 +57,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh 'docker push your-dockerhub-user/color-app:${BUILD_NUMBER}'
+                    sh 'docker push bhanutejaravutla/color-app:${BUILD_NUMBER}'
                 }
             }
         }
