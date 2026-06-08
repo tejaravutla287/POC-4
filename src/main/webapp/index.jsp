@@ -4,7 +4,6 @@
     <title>DevSecOps POC Live App</title>
     <style>
         body {
-            /* Pulls the color configured dynamically via the ticket/servlet workflow */
             background-color: ${bgColor != null ? bgColor : '#ffffff'};
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -24,9 +23,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚀 DevSecOps Pipeline Verification</h1>
-        <p>Deployed Website Environment Status: <strong>Online</strong></p>
-        <p>Current Background Color State: <strong>${bgColor}</strong></p>
+        <h1>🚀 DevSecOps Automated Pipeline</h1>
+        <p>Kubernetes Deployment Status: <strong>Online</strong></p>
+        <p>Current Page State Variable: <strong>${bgColor}</strong></p>
     </div>
 </body>
 </html>
