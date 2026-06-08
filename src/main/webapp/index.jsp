@@ -25,7 +25,7 @@
     <div class="container">
         <h1>🚀 DevSecOps Automated Pipeline</h1>
         <p>Kubernetes Deployment Status: <strong>Online</strong></p>
-        <p>Current Page State Variable: <strong>${bgColor}</strong></p>
+        <p>Hello All</p>
     </div>
 </body>
 </html>
