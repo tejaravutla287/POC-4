@@ -18,10 +18,11 @@ pipeline {
         
         stage('Trivy File System Scan') {
             steps {
-                sh 'trivy fs . --severity HIGH,CRITICAL --format table'
+                sh 'mkdir -p .trivycache'
+                sh 'trivy fs --cache-dir .trivycache --skip-java-db . --severity HIGH,CRITICAL --format table'
             }
         }
-        
+
         stage('SonarCloud Analysis') {
             steps {
                 withSonarQubeEnv('SonarCloud') { 
@@ -56,9 +57,20 @@ pipeline {
         
         stage('Trivy Docker Image Scan') {
             steps {
-                sh 'TRIVY_SKIP_JAVA_DB=true trivy image --scanners vuln --severity HIGH,CRITICAL bhanutejaravutla/color-app:${BUILD_NUMBER}'
+                // Create a custom workspace subdirectory for caching variables
+                sh 'mkdir -p .trivycache'
+                
+                // Use --cache-dir and skip the heavy Java DB processing step to optimize space
+                sh '''
+                    trivy image \
+                    --cache-dir .trivycache \
+                    --skip-java-db \
+                    --severity HIGH,CRITICAL \
+                    bhanutejaravutla/color-app:${BUILD_NUMBER}
+                '''
             }
         }
+
         
         stage('Push Docker Image') {
             steps {
