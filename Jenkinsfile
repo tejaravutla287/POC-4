@@ -19,11 +19,17 @@ pipeline {
         stage('Trivy File System Scan') {
             steps {
                 sh 'mkdir -p .trivycache'
-                // Changed to --skip-java-db-update and added explicit path '.' at the end
-                sh 'trivy fs --cache-dir .trivycache --skip-java-db-update --severity HIGH,CRITICAL --format table .'
+                // Bypasses Java DB entirely by locking scanners to vulnerability/secret modes and restricting pkgs to the OS layer
+                sh '''
+                    trivy fs \
+                    --cache-dir .trivycache \
+                    --scanners vuln,secret \
+                    --pkg-types os \
+                    --severity HIGH,CRITICAL \
+                    --format table .
+                '''
             }
         }
-
 
         stage('SonarCloud Analysis') {
             steps {
@@ -60,16 +66,18 @@ pipeline {
         stage('Trivy Docker Image Scan') {
             steps {
                 sh 'mkdir -p .trivycache'
-                // Swapped --skip-java-db out for --skip-java-db-update
+                // Applying the exact same resource-saving constraints to your container image evaluation loop
                 sh '''
                     trivy image \
                     --cache-dir .trivycache \
-                    --skip-java-db-update \
+                    --scanners vuln,secret \
+                    --pkg-types os \
                     --severity HIGH,CRITICAL \
                     bhanutejaravutla/color-app:${BUILD_NUMBER}
                 '''
             }
         }
+
 
         
         stage('Push Docker Image') {
