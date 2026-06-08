@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ColorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        
-        // This variable maps directly to the user ticket change requests
-        String backgroundColor = "lightblue"; 
-        
+        String backgroundColor = "lightblue"; // CHANGE THIS DYNAMICALLY TO TEST PIPELINE
         request.setAttribute("bgColor", backgroundColor);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
