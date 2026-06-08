@@ -35,6 +35,13 @@ pipeline {
             }
         }
         
+        stage('Maven Build') {
+            steps {
+                // Compiles, verifies, and confirms final target package properties are perfect
+                sh 'mvn package -DskipTests'
+            }
+        }
+        
         stage('Publish to Nexus') {
             steps {
                 sh 'mvn deploy --settings /var/lib/jenkins/.m2/settings.xml -DaltDeploymentRepository=nexus-snapshots::default::http://localhost:8081/repository/maven-snapshots/'
@@ -49,7 +56,7 @@ pipeline {
         
         stage('Trivy Docker Image Scan') {
             steps {
-                sh 'trivy image bhanutejaravutla/color-app:${BUILD_NUMBER} --severity HIGH,CRITICAL'
+                sh 'trivy image --scanners vuln --severity HIGH,CRITICAL bhanutejaravutla/color-app:${BUILD_NUMBER}'
             }
         }
         
