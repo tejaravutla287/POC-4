@@ -59,13 +59,11 @@ pipeline {
         
         stage('Trivy Docker Image Scan') {
             steps {
-                // Create a custom workspace subdirectory for caching variables
                 sh 'mkdir -p .trivycache'
-                
-                // Use --cache-dir and skip the heavy Java DB processing step to optimize space
+                // Swapped --skip-java-db out for --skip-java-db-update
                 sh '''
                     trivy image \
-                    --scanners vuln \
+                    --cache-dir .trivycache \
                     --skip-java-db-update \
                     --severity HIGH,CRITICAL \
                     bhanutejaravutla/color-app:${BUILD_NUMBER}
