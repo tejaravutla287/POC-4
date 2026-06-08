@@ -65,8 +65,8 @@ pipeline {
                 // Use --cache-dir and skip the heavy Java DB processing step to optimize space
                 sh '''
                     trivy image \
-                    --cache-dir .trivycache \
-                    --skip-java-db \
+                    --scanners vuln \
+                    --skip-java-db-update \
                     --severity HIGH,CRITICAL \
                     bhanutejaravutla/color-app:${BUILD_NUMBER}
                 '''
